@@ -1,33 +1,52 @@
+//: Node Packages
 const path = require("path");
 const http = require("http");
-const express = require("express");
+
+//: Dependencies
 const socketio = require("socket.io");
 
+const express = require("express");
 const app = express();
-
 const server = http.createServer(app);
 
+//: moment formatting Date
+const formatMessage = require("./utils/messages");
+const { userJoin, getCurrentUser } = require("./utils/users");
+
+//: Add socket into express server
 const io = socketio(server);
 
 //: Set static folder
 app.use(express.static(path.join(__dirname, "public")));
 
+const botMsg = "WhatsChat Bot";
+
 //: Run when server starts
 io.on("connection", (socket) => {
-  //: Connect current user
-  socket.emit("message", "Welcome to WhatsChat !");
+  socket.on("joinRoom", ({ username, room }) => {
+    const user = userJoin(socket.id, username, room);
 
-  //: Users Connection
-  socket.broadcast.emit("message", "A user has joined the chat");
+    socket.join(user.room);
+    //: Connect current user
+    socket.emit("message", formatMessage(botMsg, "Welcome to WhatsChat !"));
 
-  //: Client disconnect
-  socket.on("disconnect", () => {
-    io.emit("message", "User disconnected");
+    //: Users Connection
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        "message",
+        formatMessage(botMsg, `${user.username} has joined the chat`)
+      );
   });
 
   //: Listen Chat messages
   socket.on("chatMessage", (msg) => {
-    io.emit("message", msg);
+    io.emit("message", formatMessage("USER", msg));
+  });
+
+  //: Client disconnect
+  socket.on("disconnect", () => {
+    io.emit("message", formatMessage(botMsg, "User disconnected"));
   });
 });
 
