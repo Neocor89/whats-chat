@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 :root {
-	--dark-color-a: #667aff;
-	--dark-color-b: #7386ff;
+	--dark-color-a: #141A28;
+	--dark-color-b: #21283D;
+	/* --dark-color-a: #667aff;
+	--dark-color-b: #7386ff; */
 	--light-color: #e6e9ff;
+	--white: hsl(0,0%,100%);
 	--success-color: #5cb85c;
 	--error-color: #d9534f;
 }
@@ -38,7 +41,9 @@ a {
 	font-size: 17px;
 }
 
-/* Chat Page */
+/* --> 
+: Chat Page 
+<-- */
 
 .chat-container {
 	max-width: 1100px;
@@ -72,7 +77,7 @@ a {
 
 .chat-sidebar h2 {
 	font-size: 20px;
-	background: rgba(0, 0, 0, 0.1);
+	background: linear-gradient(90deg, #344555 -21.93%, rgba(215, 202, 228, 0) 121.93%);
 	padding: 10px;
 	margin-bottom: 20px;
 }
@@ -94,8 +99,8 @@ a {
 .chat-messages .message {
 	padding: 10px;
 	margin-bottom: 15px;
-	background-color: var(--light-color);
-	border-radius: 5px;
+	background: #D3EAFF;
+	border-radius: 0px 8px 8px 8px;
 	overflow-wrap: break-word;
 }
 
@@ -127,11 +132,14 @@ a {
 	flex: 1;
 }
 
-/* Join Page */
+/* --> 
+: Join Page 
+<-- */
+
 .join-container {
 	max-width: 500px;
 	margin: 80px auto;
-	color: #fff;
+	color: var(--white);
 }
 
 .join-header {
@@ -145,6 +153,10 @@ a {
 .join-main {
 	padding: 30px 40px;
 	background: var(--dark-color-b);
+}
+
+main.join-main {
+	border-radius: 0 0 8px 8px;
 }
 
 .join-main p {
@@ -177,6 +189,9 @@ a {
 .join-main .btn {
 	margin-top: 20px;
 	width: 100%;
+	border-radius: 4px;
+	line-height: 35px;
+	background: #34a0a4;
 }
 
 @media (max-width: 700px) {
